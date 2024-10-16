@@ -24,47 +24,55 @@ public class ComputerAsserter {
     }
 
     public ComputerAsserter on(String someTokenIWant) {
-         // TODO !!!!
+        computer = MyLLMMagicComputer.builder()
+                .useUrl("http://themagicbrain.io/demo")
+                .useApiKey(UUID.fromString("1a139f7e-7e97-44fc-8321-3db48c3c0cdc"))
+                .useBrain(brain)
+                .build();
+        guess = computer.guessWhat(someTokenIWant);
         return this;
     }
 
     public ComputerAsserter messageIsPresent() {
         assert guess != null;
 
-        // TODO !!!!
+        assertNotNull(guess.message());
         return this;
     }
     public ComputerAsserter messageIs(String expectedMessage) {
         assert guess != null;
 
-        // TODO !!!!
+        assertEquals(expectedMessage, guess.message());
         return this;
     }
 
     public ComputerAsserter resultIsNotEmpty() {
         assert guess != null;
 
-        // TODO !!!!
+        assertNotNull(guess.guess());
         return this;
     }
 
     public ComputerAsserter resultIsEmpty() {
         assert guess != null;
 
-        // TODO !!!!
+        assertNull(guess.guess());
         return this;
     }
 
     public ComputerAsserter evidencesAreOk() {
         assert guess != null;
+        assertFalse(Double.isNaN(guess.alpha()));
+        assertFalse(Double.isNaN(guess.beta()));
+        assertFalse(Double.isNaN(guess.gamma()));
 
-        // TODO !!!!
+        assertEquals(1.0, guess.alpha() + guess.beta() + guess.gamma(), 0.001);
         return this;
     }
 
     public ComputerAsserter evidencesAreInfinite() {
         assert guess != null;
-        // TODO !!!!
+        assertTrue(Double.isNaN(guess.alpha()));
         return this;
     }
 }
